@@ -1,4 +1,5 @@
 # created by virtualenv automatically
+# My file for ignore
 information/chats.py
 information/agents.py
 information/logon.py
