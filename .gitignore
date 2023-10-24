@@ -6,6 +6,7 @@ information/logon.py
 information/numerlist.py
 information/pagelist.py
 information/tokenlist.py
+main.py
 traffic_info.json
 cookies.pkl
 test_url.py
