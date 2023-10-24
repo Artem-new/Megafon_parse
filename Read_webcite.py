@@ -39,13 +39,13 @@ def check():
         [check_numbers(item[0], item[1], driver, chat_info, chat_id)for item in cheking.items()]
         print(balance_value)
         '''Take Json information'''
-        information_parce = {f"{str(date.today())}":
-                            {1: {f'{balance_value[0]}': balance_value[1]},
-                            2: {f'{balance_value[2]}': balance_value[3]},
-                            3: {f'{balance_value[4]}': balance_value[5]},
-                            4: {f'{balance_value[6]}': balance_value[7]}
-                            }
-                            }
+        # information_parce = {"date": f"{str(date.today())}",
+        #                     {1: f'{balance_value[0]}': balance_value[1],
+        #                     2: f'{balance_value[2]}': balance_value[3],
+        #                     3: f'{balance_value[4]}': balance_value[5],
+        #                     4: f'{balance_value[6]}': balance_value[7]
+        #                     }
+
         # information = json.dumps(information_parce)
         '''Save in json'''
         save_to_json(information_parce)
