@@ -30,6 +30,6 @@ def take_information():
     connection = sqlite3.connect('Megafon')
     coursor_connection = connection.cursor()
     coursor_connection.execute("""
-                                  SELECT last_reaffic FROM Last_info 
+                                  SELECT last_traffic FROM Last_info 
                                 """)
     traffic_infomation.append(coursor_connection.fetchall())
