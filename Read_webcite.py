@@ -6,7 +6,6 @@ from commands.login_in_website import enter_in_site
 from commands.send_info import send_message
 from information.chats import chat_id, chat_info
 from commands.parse_website import check_numbers, balance_list, balance_value
-from commands.save_information_in_json import save_to_json
 import random
 import requests
 from selenium.webdriver.chrome.service import Service
@@ -38,22 +37,9 @@ def check():
         '''Parse sites'''
         [check_numbers(item[0], item[1], driver, chat_info, chat_id)for item in cheking.items()]
         print(balance_value)
-        '''Take Json information'''
-        # information_parce = {"date": f"{str(date.today())}",
-        #                     {1: f'{balance_value[0]}': balance_value[1],
-        #                     2: f'{balance_value[2]}': balance_value[3],
-        #                     3: f'{balance_value[4]}': balance_value[5],
-        #                     4: f'{balance_value[6]}': balance_value[7]
-        #                     }
 
-        # information = json.dumps(information_parce)
-        '''Save in json'''
-        save_to_json(information_parce)
-        print(information_parce)
         send_message(chat_id,  '.'.join(balance_list))
         driver.quit()
-        # send_message(chat_id, f"{balance_list[0]} {balance_list[1]} {balance_list[2]} {balance_list[3]}")
-        # bot.send_message(test, text=' '.join(balance_list))
 
     except Exception as ex:
         print(ex)
