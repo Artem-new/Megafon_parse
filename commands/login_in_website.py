@@ -1,7 +1,7 @@
 import time
 from selenium.webdriver.common.keys import Keys
 
-
+"""Поиск элементов на странице и ввод логина и пароля"""
 def enter_in_site(driver, url, loginM, passM):
     driver.get(url)
     time.sleep(4)  # открытие ссылки

@@ -1,4 +1,4 @@
-'''Hide window line'''
+'''Скрыть окно консоли'''
 from pyvirtualdisplay import Display
 import win32gui, win32con
 

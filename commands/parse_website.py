@@ -3,23 +3,26 @@ from commands.send_info import send_message
 import time
 import json
 
+
 balance_list = []
 balance_value = []
 
 
 def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
     try:
-        '''Pages'''
+        '''Открыть страницу'''
         driver.get(page_number)
         time.sleep(4)
-        '''Find info on page'''
+        '''Получить данные страницы в обход javascriot'''
         website_info = driver.page_source
-        '''Find and take json file'''
+        '''Найти и получить json файл, способ: поиск id элементов фигурной скобки(открытие и закрытие),
+        получаем в этом промежуте данные и привеодим данные в json объект'''
         clear_first_element = website_info.find("{")
         clear_last_element = website_info.rfind("}")
         info_about_number = website_info[clear_first_element:clear_last_element + 1]
         json_info_number = json.loads(info_about_number)
-
+        """Ищем данные в json файле, количество оставшегося трафика по имени предоставляемых
+        услуг, убежадемся что трафик считается в Гб, на этой основе проверяем оставшийся лимит трафика"""
         for info in json_info_number['data']['discounts']:
             if info['label'] == 'Интернет по России':
                 traffic_value = info['value']
