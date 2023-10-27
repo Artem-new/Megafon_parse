@@ -16,12 +16,12 @@ from datetime import date
 
 def check():
     try:
-
+        '''Настрока вебдрайвера, скрывать окно браузера, убрать загрузку картинок,
+        '''
         options = webdriver.ChromeOptions()
         # options.add_argument("--headless")
         prefs = {"profile.managed_default_content_settings.images": 2}
         options.add_experimental_option("prefs", prefs)
-        options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument(
             f"user-agent={random.choice(user_agent_list)}")
@@ -31,7 +31,7 @@ def check():
             options=options
 
         )
-        '''Login in website'''
+        '''Выполнение аунтификации на сайте'''
         enter_in_site(driver, url, loginM, passM)
         '''Get sites where information'''
         cheking = dict(zip(pages, numbers))
