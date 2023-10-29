@@ -48,8 +48,7 @@ def check():
 
         # information = json.dumps(information_parce)
         '''Save in json'''
-        save_to_json(information_parce)
-        print(information_parce)
+
         send_message(chat_id,  '.'.join(balance_list))
         driver.quit()
         # send_message(chat_id, f"{balance_list[0]} {balance_list[1]} {balance_list[2]} {balance_list[3]}")

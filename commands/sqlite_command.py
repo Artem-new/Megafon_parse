@@ -5,7 +5,6 @@ traffic_infomation = []
 
 class Base:
 
-
     def connection_base(self, command):
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
@@ -39,7 +38,7 @@ class Base:
         connection = sqlite3.connect('Megafon')
         coursor_connection = connection.cursor()
         coursor_connection.execute("""
-                                      SELECT last_traffic FROM Last_info 
+                                        SELECT last_traffic FROM Last_info 
                                     """)
         traffic_infomation.append(coursor_connection.fetchall())
         coursor_connection.close()
