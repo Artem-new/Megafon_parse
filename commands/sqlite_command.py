@@ -36,12 +36,14 @@ class Base:
 
 
     def take_information(self):
-        connection = sqlite3.connect('Megafon')
+        connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("""
                                       SELECT last_traffic FROM Last_info 
                                     """)
-        traffic_infomation.append(coursor_connection.fetchall())
+        last_information_traffic = coursor_connection.fetchone()
+        for one_info in last_information_traffic:
+            traffic_infomation.append(one_info)
         coursor_connection.close()
 
 
