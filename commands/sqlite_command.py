@@ -35,7 +35,7 @@ class Base:
 
 
     def take_information(self):
-        connection = sqlite3.connect('Megafon')
+        connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("""
                                         SELECT last_traffic FROM Last_info 
