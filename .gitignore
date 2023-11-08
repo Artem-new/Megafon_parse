@@ -16,7 +16,7 @@ __pycache__/
 .gitignore
 # C extensions
 *.so
-
+Megafon.db
 
 # Distribution / packaging
 .Python
@@ -172,3 +172,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /Megafon
+!/Megafon.db

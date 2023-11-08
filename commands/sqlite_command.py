@@ -15,40 +15,53 @@ class Base:
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("""
-                                      CREATE TABLE IF MOT EXISTS Traffic_information(
-                                          id integer PIMARY KEY,
+                                      CREATE TABLE IF NOT EXISTS Traffic_information(
                                           number text NOT NULL,
-                                          traffic integer NOT NULL,
+                                          traffic text NOT NULL,
                                           format text NOT NULL
-                                      );
-                                      CREATE TABLE IF MOT EXISTS Last_info(
-                                          id integer PIMARY KEY,
-                                          last_traffic integer NOT NULL,
+                                          )
+                                    """)
+        coursor_connection.execute("""
+                                    CREATE TABLE IF NOT EXISTS Last_info(
+                                          number text NOT NULL,
+                                          last_traffic text NOT NULL,
                                           format text NOT NULL
-                                      );
-                                      CREATE TABLE IF NOT EXISTS Traffic_limit(
-                                          id integer PIMARY KEY,
-                                          limit integer NOT NULL,
+                                          )
+                                    """)
+        coursor_connection.execute("""
+                                    CREATE TABLE IF NOT EXISTS Traffic_limit(
+                                          number text NOT NULL,
+                                          limits text NOT NULL,
                                           format text NOT NULL
-                               """)
+                                          )
+                                    """)
         coursor_connection.close()
 
 
-    def take_information(self):
+    def take_information(self, numb):
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
-        coursor_connection.execute("""
-                                        SELECT last_traffic FROM Last_info 
-                                    """)
+        coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?",(numb))
         last_information_traffic = coursor_connection.fetchone()
-        for one_info in last_information_traffic:
-            traffic_infomation.append(one_info)
+        for last_trafic_info in last_information_traffic:
+            traffic_infomation.append(last_trafic_info)
         coursor_connection.close()
 
 
-    def save_information_in_the_table(self, numb, traffics, lust_traffic):
-        connection = sqlite3.connect('Megafon')
+    def save_information_in_the_table(self, numb, traffics, lust_traffic, limit):
+        connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
-        coursor_connection.execute("""
-                                   
-                                   """)
+        coursor_connection.execute("INSERT INTO Traffic_information (number, traffic, format) VALUES (?,?,?)",(numb, traffics, 'Гб.'))
+        # coursor_connection.execute("INSERT INTO Last_info (number, last_traffic, format) VALUES (?,?,?)",(numb, lust_traffic, 'Гб.'))
+        # coursor_connection.execute("INSERT INTO Traffic_limit (number, limits, format) VALUES (?,?,?)",(numb, limit, 'Гб.'))
+
+        connection.close()
+    def update_informatin_in_the_table_Lust_info(self, numb, lust_traffic):
+        connection = sqlite3.connect('Megafon.db')
+        coursor_connection = connection.cursor()
+        coursor_connection.execute(f'DELETE FROM Last_info WHERE number={numb}', ('newuser',))
+        coursor_connection.execute(f"UPDATE Last_info SET last_traffic=? WHERE number=?",
+                                   (lust_traffic, numb))
+        connection.commit()
+        connection.close()
+
