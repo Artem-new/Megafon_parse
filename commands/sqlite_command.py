@@ -12,6 +12,9 @@ class Base:
 
 
     def creata_table(self):
+        """Создание таблицы базы данных
+        :rtype: object
+        """
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("""
@@ -39,6 +42,7 @@ class Base:
 
 
     def take_information(self, numb):
+        """Получение информации о предыдущем трафике"""
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?",(numb))
@@ -49,6 +53,7 @@ class Base:
 
 
     def save_information_in_the_table(self, numb, traffics, lust_traffic, limit):
+        """Сохраниение данных в таблицу"""
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("INSERT INTO Traffic_information (number, traffic, format) VALUES (?,?,?)",(numb, traffics, 'Гб.'))
@@ -57,6 +62,7 @@ class Base:
 
         connection.close()
     def update_informatin_in_the_table_Lust_info(self, numb, lust_traffic):
+        """Обновление информации о предыдущем трафике"""
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute(f'DELETE FROM Last_info WHERE number={numb}', ('newuser',))
