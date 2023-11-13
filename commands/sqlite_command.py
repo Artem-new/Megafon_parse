@@ -62,8 +62,6 @@ class Base:
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute("INSERT INTO Traffic_limit (number, limit, format) VALUES (?,?,?)", (numb, limit, format))
-        # coursor_connection.execute("INSERT INTO Last_info (number, last_traffic, format) VALUES (?,?,?)",(numb, lust_traffic, 'Гб.'))
-        # coursor_connection.execute("INSERT INTO Traffic_limit (number, limits, format) VALUES (?,?,?)",(numb, limit, 'Гб.'))
         coursor_connection.close()
 
     def load_information_about_limit(self, numb):
@@ -71,6 +69,7 @@ class Base:
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb))
+        '''Получение'''
         last_information_traffic = coursor_connection.fetchone()
         for last_trafic_info in last_information_traffic:
             information_about_limit_traffic.append(last_trafic_info)
