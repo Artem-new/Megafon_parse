@@ -6,6 +6,7 @@ import json
 
 balance_list = []
 balance_value = []
+total_balance = []
 
 
 def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
@@ -21,15 +22,21 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
         clear_last_element = website_info.rfind("}")
         info_about_number = website_info[clear_first_element:clear_last_element + 1]
         json_info_number = json.loads(info_about_number)
+        with open('traffic_info.json', 'w', encoding='utf8') as outfile:  # Открываем файл для записи
+            json.dump(json_info_number, outfile, indent=4)
         """Ищем данные в json файле, количество оставшегося трафика по имени предоставляемых
         услуг, убежадемся что трафик считается в Гб, на этой основе проверяем оставшийся лимит трафика"""
         for info in json_info_number['data']['discounts']:
             if info['label'] == 'Интернет по России':
                 traffic_value = info['value']
                 traffic_unit = info['unit']
+                total_traffic_value = info['valueTotal']
+                total_traffic_unit = info['unitTotal']
                 balance_list.append(f"{number_ch} - {traffic_value} {traffic_unit}\n")
                 balance_value.append(f"{number_ch}")
                 balance_value.append(f"{traffic_value}")
+                total_balance.append(f"{total_traffic_value}")
+                total_balance.append(f"{total_traffic_unit}")
                 if traffic_unit == 'Гб.':
                     gb(traffic_value, chat_info, number_ch, traffic_unit)
                 else:

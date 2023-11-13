@@ -5,7 +5,8 @@ from information.pagelist import pages, url
 from commands.login_in_website import enter_in_site
 from commands.send_info import send_message
 from information.chats import chat_id, chat_info
-from commands.parse_website import check_numbers, balance_list, balance_value
+from commands.parse_website import check_numbers, balance_list, balance_value, total_balance
+from commands.sqlite_command import traffic_infomation, information_about_limit_traffic
 from commands.save_information_in_json import save_to_json
 import random
 import requests
@@ -29,7 +30,6 @@ def check():
         driver = webdriver.Chrome(
             service=service,
             options=options
-
         )
         '''Выполнение аунтификации на сайте'''
         enter_in_site(driver, url, loginM, passM)
@@ -38,7 +38,6 @@ def check():
         '''Parse sites'''
         [check_numbers(item[0], item[1], driver, chat_info, chat_id)for item in cheking.items()]
         print(balance_value)
-
 
 
         send_message(chat_id,  '.'.join(balance_list))
