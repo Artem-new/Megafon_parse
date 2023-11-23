@@ -1,6 +1,6 @@
 from commands.chek_traffik import mb,gb
 from commands.send_info import send_message
-from commands.sqlite_command import load_information_about_limit, information_about_limit_traffic, save_information_in_the_table_about_limit
+from commands.sqlite_command import load_information_about_traffic_limit, information_about_limit_traffic, save_information_in_the_table_about_limit
 import time
 import json
 
@@ -43,13 +43,13 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 print(balance_list, total_balance)
                 '''Загружаем информацию о лимите траффика и если таблица не заполнена, записываем данные'''
                 try:
-                    load_information_about_limit(number_ch)
+                    load_information_about_traffic_limit(number_ch)
                 except Exception as exit:
                     print(exit)
                     save_information_in_the_table_about_limit(number_ch, total_traffic_value, total_traffic_unit)
                 '''Проверяем что последня информация '''
                 print(information_about_limit_traffic)
-                if information_about_limit_traffic!=total_traffic_value:
+                if information_about_limit_traffic[0]!=total_traffic_value:
                     print(information_about_limit_traffic[0])
 
                 if traffic_unit == 'Гб.':

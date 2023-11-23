@@ -60,11 +60,11 @@ def save_information_in_the_table_about_limit(numb, limit, format):
     coursor_connection.execute("INSERT INTO Traffic_limit (number, limits, format) VALUES (?,?,?)", (numb, limit, format))
     connection.commit()
 
-def load_information_about_limit(numb):
+def load_information_about_traffic_limit(numb):
     '''Получить инофрмацию о лимите траффика'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
-    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb))
+    coursor_connection.execute(f"SELECT limits FROM Traffic_limit WHERE number=?", (numb,))
     '''Получение'''
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
