@@ -1,5 +1,6 @@
 from commands.chek_traffik import mb,gb
 from commands.send_info import send_message
+from commands.sqlite_command import load_information_about_limit, information_about_limit_traffic, save_information_in_the_table_about_limit
 import time
 import json
 
@@ -28,15 +29,29 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
         услуг, убежадемся что трафик считается в Гб, на этой основе проверяем оставшийся лимит трафика"""
         for info in json_info_number['data']['discounts']:
             if info['label'] == 'Интернет по России':
+                '''Получаем значение текущего трафика'''
                 traffic_value = info['value']
                 traffic_unit = info['unit']
+                '''Проверяем лимит трафика'''
                 total_traffic_value = info['valueTotal']
                 total_traffic_unit = info['unitTotal']
-                balance_list.append(f"{number_ch} - {traffic_value} {traffic_unit}\n")
+                balance_list.append(f"{number_ch} - {traffic_value} {traffic_unit}")
                 balance_value.append(f"{number_ch}")
                 balance_value.append(f"{traffic_value}")
                 total_balance.append(f"{total_traffic_value}")
                 total_balance.append(f"{total_traffic_unit}")
+                print(balance_list, total_balance)
+                '''Загружаем информацию о лимите траффика и если таблица не заполнена, записываем данные'''
+                try:
+                    load_information_about_limit(number_ch)
+                except Exception as exit:
+                    print(exit)
+                    save_information_in_the_table_about_limit(number_ch, total_traffic_value, total_traffic_unit)
+                '''Проверяем что последня информация '''
+                print(information_about_limit_traffic)
+                if information_about_limit_traffic!=total_traffic_value:
+                    print(information_about_limit_traffic[0])
+
                 if traffic_unit == 'Гб.':
                     gb(traffic_value, chat_info, number_ch, traffic_unit)
                 else:

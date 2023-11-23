@@ -36,14 +36,14 @@ def creata_table():
                                 """)
     coursor_connection.close()
 
-def take_information(numb):
+def take_last_information_about_traffik(numb):
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
     coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb))
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
         traffic_infomation.append(last_trafic_info)
-    coursor_connection.close()
+    connection.commit()
 
 def save_information_in_the_table(numb, traffics):
     '''Сохранение информации в базу'''
@@ -51,14 +51,14 @@ def save_information_in_the_table(numb, traffics):
     coursor_connection = connection.cursor()
     '''Вставить в таблицу инофрмацию об использованом трафиком между предыдущими сессиями'''
     coursor_connection.execute("INSERT INTO Traffic_information (number, traffic, format) VALUES (?,?,?)",(numb, traffics, 'Гб.'))
-    coursor_connection.close()
+    connection.commit()
 
-def save_information_in_the_table_about_limit(numb, limit):
+def save_information_in_the_table_about_limit(numb, limit, format):
     '''Вставить инофрмацию олимите трафика'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
-    coursor_connection.execute("INSERT INTO Traffic_limit (number, limit, format) VALUES (?,?,?)", (numb, limit, format))
-    coursor_connection.close()
+    coursor_connection.execute("INSERT INTO Traffic_limit (number, limits, format) VALUES (?,?,?)", (numb, limit, format))
+    connection.commit()
 
 def load_information_about_limit(numb):
     '''Получить инофрмацию о лимите траффика'''
@@ -69,7 +69,8 @@ def load_information_about_limit(numb):
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
         information_about_limit_traffic.append(last_trafic_info)
-    coursor_connection.close()
+        print(information_about_limit_traffic)
+    connection.commit()
 
 def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
     connection = sqlite3.connect('Megafon.db')
@@ -78,5 +79,5 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
     coursor_connection.execute(f"UPDATE Last_info SET last_traffic=? WHERE number=?",
                                (lust_traffic, numb))
     connection.commit()
-    connection.close()
+
 
