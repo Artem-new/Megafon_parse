@@ -39,7 +39,7 @@ def creata_table():
 def take_last_information_about_traffik(numb):
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
-    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb))
+    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
         traffic_infomation.append(last_trafic_info)
