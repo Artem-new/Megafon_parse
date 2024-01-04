@@ -41,6 +41,7 @@ def creata_table():
                                 """)
     coursor_connection.close()
 
+
 def take_last_information_about_traffik(numb):
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
@@ -58,12 +59,39 @@ def save_information_in_the_table(numb, traffics):
     coursor_connection.execute("INSERT INTO Traffic_information (date, number, traffic, format) VALUES (?,?,?,?)", (time, numb, traffics, 'Гб.'))
     connection.commit()
 
+
+def update_information_in_the_table(numb, traffics):
+    try:
+        connection = sqlite3.connect('Megafon.db')
+        coursor_connection = connection.cursor()
+        coursor_connection.execute(f'DELETE FROM Traffic_information WHERE date=?', (time,))
+        connection.commit()
+        coursor_connection.execute(f"UPDATE Traffic_information SET WHERE number=?",
+                                   (time, numb, traffics, "Гб."))
+        connection.commit()
+    except Exception:
+        save_information_in_the_table(numb, traffics)
+
 def save_information_in_the_table_about_limit(numb, limit, format):
     '''Вставить инофрмацию олимите трафика'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
     coursor_connection.execute("INSERT INTO Traffic_limit (number, limits, format) VALUES (?,?,?)", (numb, limit, format))
     connection.commit()
+
+
+def update_informattion_in_the_table_about_limit(numb, limit, format):
+    try:
+        connection = sqlite3.connect('Megafon.db')
+        coursor_connection = connection.cursor()
+        coursor_connection.execute(f'DELETE FROM Traffic_limit WHERE number=?', (numb,))
+        connection.commit()
+        coursor_connection.execute(f"UPDATE Traffic_limit SET WHERE number=?",
+                                   (numb, limit, format))
+        connection.commit()
+    except Exception:
+        save_information_in_the_table_about_limit(numb, limit, format)
+
 
 def load_information_about_traffic_limit(numb):
     '''Получить инофрмацию о лимите траффика'''
@@ -89,8 +117,9 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
     try:
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
-        coursor_connection.execute(f'DELETE FROM Last_info WHERE number={numb}', ('newuser',))
-        coursor_connection.execute(f"UPDATE Last_info SET last_traffic=? WHERE number=?",
+        coursor_connection.execute(f'DELETE FROM Last_info WHERE number=?', (numb,))
+        connection.commit()
+        coursor_connection.execute(f"UPDATE Last_info SET WHERE number=?",
                               (lust_traffic, numb))
         connection.commit()
     except Exception:
