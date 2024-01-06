@@ -16,7 +16,7 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
     try:
         '''Открыть страницу'''
         driver.get(page_number)
-        time.sleep(4)
+        time.sleep(6)
         '''Получить данные страницы в обход javascriot'''
         website_info = driver.page_source
         '''Найти и получить json файл, способ: поиск id элементов фигурной скобки(открытие и закрытие),
@@ -25,7 +25,7 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
         clear_last_element = website_info.rfind("}")
         info_about_number = website_info[clear_first_element:clear_last_element + 1]
         json_info_number = json.loads(info_about_number)
-        with open('traffic_info.json', 'w', encoding='utf8') as outfile:  # Открываем файл для записи
+        with open('traffic_info.json', 'w', encoding='utf-8') as outfile:  # Открываем файл для записи
             json.dump(json_info_number, outfile, indent=4)
         """Ищем данные в json файле, количество оставшегося трафика по имени предоставляемых
         услуг, убежадемся что трафик считается в Гб, на этой основе проверяем оставшийся лимит трафика"""
@@ -42,9 +42,10 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 balance_value.append(f"{traffic_value}")
                 total_balance.append(f"{total_traffic_value}")
                 total_balance.append(f"{total_traffic_unit}")
+                print(balance_value, total_balance)
                 '''Загружаем информацию о лимите траффика и если таблица не заполнена, записываем данные'''
                 try:
-                    load_information_about_traffic_limit(number_ch)
+                    load_information_about_traffic_limit(number_ch, total_traffic_value, total_traffic_value)
                 except Exception as exit:
                     print(exit)
                     save_information_in_the_table_about_limit(number_ch, total_traffic_value, total_traffic_unit)
@@ -52,7 +53,7 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 if float(information_about_limit_traffic[0]) != total_traffic_value:
                     update_informatin_in_the_table_Lust_info(number_ch, total_traffic_value)
                 else:
-                    ''' Проверяем пустое ли значение в таблах'''
+                    ''' Проверяем пустое ли значение в таблицах'''
                     try:
                         take_last_information_about_traffik(number_ch)
                         print(traffic_infomation)
