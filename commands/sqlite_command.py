@@ -115,7 +115,7 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
         save_information_about_last_info(numb, lust_traffic)
 
 
-def load_information_about_traffic_limit(numb, limit_traffic, format):
+def load_and_save_information_about_traffic_limit(numb, limit_traffic, format):
     '''Получить инофрмацию о лимите траффика'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
