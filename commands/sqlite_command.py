@@ -42,16 +42,6 @@ def creata_table():
     coursor_connection.close()
 
 
-def take_last_information_about_traffik(numb):
-    connection = sqlite3.connect('Megafon.db')
-    coursor_connection = connection.cursor()
-    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
-    last_information_traffic = coursor_connection.fetchone()
-    for last_trafic_info in last_information_traffic:
-        traffic_infomation.append(last_trafic_info)
-    connection.commit()
-
-
 def save_information_in_the_table(numb, traffics, format):
     '''Сохранение информации в базу'''
     connection = sqlite3.connect('Megafon.db')
@@ -61,17 +51,28 @@ def save_information_in_the_table(numb, traffics, format):
     connection.commit()
 
 
-def update_information_in_the_table(numb, traffics, format):
+def take_last_information_about_traffik(numb):
+    connection = sqlite3.connect('Megafon.db')
+    coursor_connection = connection.cursor()
+    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
+    last_information_traffic = coursor_connection.fetchone()
+    for last_trafic_info in last_information_traffic:
+        traffic_infomation.append(last_trafic_info)
+
+    connection.commit()
+
+
+def update_information_in_the_table(numb, traffic, format):
     try:
+        take_last_information_about_traffik(numb, format)
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
         coursor_connection.execute(f'DELETE FROM Traffic_information WHERE date=?', (time,))
         connection.commit()
-        coursor_connection.execute(f"UPDATE Traffic_information SET WHERE number=?",
-                                   (time, numb, traffics, format))
+        save_information_in_the_table(numb, traffic_infomation+traffic, format)
         connection.commit()
     except Exception:
-        save_information_in_the_table(numb, traffics)
+        save_information_in_the_table(numb, traffic, format)
 
 
 def save_information_in_the_table_about_limit(numb, limit, format):
@@ -95,10 +96,10 @@ def update_informattion_in_the_table_about_limit(numb, limit, format):
         save_information_in_the_table_about_limit(numb, limit, format)
 
 
-def save_information_about_last_info(numb, last_traffic):
+def save_information_about_last_info(numb, last_traffic, format):
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
-    coursor_connection.execute("INSERT INTO Last_info (number, last_traffic, format) VALUES (?,?,?)", (numb, last_traffic, 'Гб.'))
+    coursor_connection.execute("INSERT INTO Last_info (number, last_traffic, format) VALUES (?,?,?)", (numb, last_traffic, format))
     connection.commit()
 
 
@@ -112,7 +113,7 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
                               (lust_traffic, numb))
         connection.commit()
     except Exception:
-        save_information_about_last_info(numb, lust_traffic)
+        save_information_about_last_info(numb, lust_traffic, numb)
 
 
 def load_and_save_information_about_traffic_limit(numb, limit_traffic, format):
