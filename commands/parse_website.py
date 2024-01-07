@@ -2,7 +2,7 @@ from commands.chek_traffik import mb,gb
 from commands.send_info import send_message
 from commands.sqlite_command import load_and_save_information_about_traffic_limit, information_about_limit_traffic, save_information_in_the_table_about_limit, update_informatin_in_the_table_Lust_info
 from commands.sqlite_command import take_last_information_about_traffik, traffic_infomation, save_information_in_the_table, save_information_in_the_table_about_limit
-from commands.sqlite_command import update_information_in_the_table
+from commands.sqlite_command import update_information_in_the_table, lust_traffic_infomation,take_information_abut_lust_info
 import time
 import json
 

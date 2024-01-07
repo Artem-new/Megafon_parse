@@ -3,6 +3,7 @@ from datetime import date
 
 
 traffic_infomation = []
+lust_traffic_infomation = []
 save_information_in_the_table_about_limit = []
 information_about_limit_traffic = []
 time = date.today()
@@ -56,8 +57,8 @@ def take_last_information_about_traffik(numb):
     coursor_connection = connection.cursor()
     coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
     last_information_traffic = coursor_connection.fetchone()
-    for last_trafic_info in last_information_traffic:
-        traffic_infomation.append(last_trafic_info)
+    for trafic_info in last_information_traffic:
+        traffic_infomation.append(trafic_info)
 
     connection.commit()
 
@@ -101,6 +102,14 @@ def save_information_about_last_info(numb, last_traffic, format):
     coursor_connection = connection.cursor()
     coursor_connection.execute("INSERT INTO Last_info (number, last_traffic, format) VALUES (?,?,?)", (numb, last_traffic, format))
     connection.commit()
+
+def take_information_abut_lust_info(numb):
+    connection = sqlite3.connect('Megafon.db')
+    coursor_connection = connection.cursor()
+    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
+    last_information_traffic = coursor_connection.fetchone()
+    for last_trafic_info in last_information_traffic:
+        lust_traffic_infomation.append(last_trafic_info)
 
 
 def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
