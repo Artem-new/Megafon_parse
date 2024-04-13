@@ -25,12 +25,11 @@ def check():
         '''
         options = webdriver.ChromeOptions()
         # options.add_argument("--headless")
-        prefs = {"profile.managed_default_content_settings.images": 2}
-        options.add_experimental_option("prefs", prefs)
-        options.add_argument("--disable-dev-shm-usage")
+        #prefs = {"profile.managed_default_content_settings.images": 2}
+        #options.add_experimental_option("prefs", prefs)
+        #options.add_argument("--disable-dev-shm-usage")
         options.add_argument(
             f"user-agent={random.choice(user_agent_list)}")
-        service = Service(executable_path='./chromedriver.exe')
         driver = webdriver.Chrome(
             service=ChromeService(ChromeDriverManager().install())
         )

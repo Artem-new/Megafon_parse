@@ -2,7 +2,7 @@ from commands.chek_traffik import mb,gb
 from commands.send_info import send_message
 from commands.sqlite_command import load_and_save_information_about_traffic_limit, information_about_limit_traffic, save_information_in_the_table_about_limit, update_informatin_in_the_table_Lust_info
 from commands.sqlite_command import take_last_information_about_traffik, traffic_infomation, save_information_in_the_table, save_information_in_the_table_about_limit
-from commands.sqlite_command import update_information_in_the_table, lust_traffic_infomation,take_information_abut_lust_info
+from commands.sqlite_command import update_information_in_the_table, lust_traffic_infomation, take_information_abut_lust_info
 import time
 import json
 
@@ -54,11 +54,19 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 else:"""
                 ''' Проверяем пустое ли значение в таблицах'''
                 try:
-                    take_last_information_about_traffik(number_ch)
-                    print(traffic_infomation)
-                # Если значение пустое сохраняем данные как первое значение
+                    take_information_abut_lust_info(number_ch)
+                    """Записываем условие сохранения испоьльзованного траффика"""
+                    if traffic_infomation[0] < traffic_value:
+                        used_traffic_last = float(traffic_value)-float(traffic_infomation[0])
+                        save_information_in_the_table(page_number, used_traffic_last, traffic_unit)
+                    else:
+                        used_traffic_new = float(total_traffic_value) - float(traffic_infomation[0])
+                        save_information_in_the_table(page_number, used_traffic_new, traffic_unit)
+
+                    print(lust_traffic_infomation)
+               #Если значение пустое сохраняем данные как первое значение
                 except Exception as ex:
-                    save_information_in_the_table(number_ch, 0)
+                    save_information_in_the_table(number_ch, 0, traffic_unit)
 
                 if traffic_unit == 'Гб.':
                     gb(traffic_value, chat_info, number_ch, traffic_unit)

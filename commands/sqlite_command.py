@@ -6,7 +6,7 @@ traffic_infomation = []
 lust_traffic_infomation = []
 save_information_in_the_table_about_limit = []
 information_about_limit_traffic = []
-time = date.today()
+time_date = date.today()
 
 
 def connection_base(command):
@@ -44,15 +44,16 @@ def creata_table():
 
 
 def save_information_in_the_table(numb, traffics, format):
-    '''Сохранение информации в базу'''
+    '''Сохранение информации в базу о использованном трафике'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
     '''Вставить в таблицу инофрмацию об использованом трафиком между предыдущими сессиями'''
-    coursor_connection.execute("INSERT INTO Traffic_information (date, number, traffic, format) VALUES (?,?,?,?)", (time, numb, traffics, format))
+    coursor_connection.execute("INSERT INTO Traffic_information (date, number, traffic, format) VALUES (?,?,?,?)", (time_date, numb, traffics, format))
     connection.commit()
 
 
 def take_last_information_about_traffik(numb):
+    '''Получить информацию о последнем трафике'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
     coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
@@ -65,14 +66,16 @@ def take_last_information_about_traffik(numb):
 
 def update_information_in_the_table(numb, traffic, format):
     try:
-        take_last_information_about_traffik(numb, format)
+        take_last_information_about_traffik(numb)
         connection = sqlite3.connect('Megafon.db')
         coursor_connection = connection.cursor()
-        coursor_connection.execute(f'DELETE FROM Traffic_information WHERE date=?', (time,))
+        coursor_connection.execute(f'DELETE FROM Traffic_information WHERE date=?', (time_date,))
+        # coursor_connection.execute(f'DELETE FROM Traffic_limit WHERE number=?', (numb,))
         connection.commit()
-        save_information_in_the_table(numb, traffic_infomation+traffic, format)
+        save_information_in_the_table(numb, traffic_infomation[0]+traffic, format)
         connection.commit()
-    except Exception:
+    except Exception as ex:
+        print(ex)
         save_information_in_the_table(numb, traffic, format)
 
 
@@ -110,6 +113,7 @@ def take_information_abut_lust_info(numb):
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
         lust_traffic_infomation.append(last_trafic_info)
+        print(lust_traffic_infomation)
 
 
 def update_informatin_in_the_table_Lust_info(numb, lust_traffic):
