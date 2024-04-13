@@ -54,17 +54,25 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 else:"""
                 ''' Проверяем пустое ли значение в таблицах'''
                 try:
-                    take_information_abut_lust_info(number_ch)
-                    """Записываем условие сохранения испоьльзованного траффика"""
-                    if traffic_infomation[0] < traffic_value:
-                        used_traffic_last = float(traffic_value)-float(traffic_infomation[0])
-                        save_information_in_the_table(page_number, used_traffic_last, traffic_unit)
-                    else:
-                        used_traffic_new = float(total_traffic_value) - float(traffic_infomation[0])
+                    """Проверим лимит трафика"""
+                    take_last_information_about_traffik(number_ch)
+                    if float(traffic_infomation[0])!=float(total_balance[0]):
+                        update_informatin_in_the_table_Lust_info(number_ch, float(total_balance))
+                        take_information_abut_lust_info(number_ch)
+                        used_traffic_new = float(total_traffic_value) - float(lust_traffic_infomation[0])
                         save_information_in_the_table(page_number, used_traffic_new, traffic_unit)
+                    else:
+                        take_information_abut_lust_info(number_ch)
+                        """Записываем условие сохранения испоьльзованного траффика"""
+                        if lust_traffic_infomation[0] < traffic_value:
+                            used_traffic_last = float(traffic_value)-float(lust_traffic_infomation[0])
+                            save_information_in_the_table(page_number, used_traffic_last, traffic_unit)
+                        else:
+                            used_traffic_new = float(total_traffic_value) - float(lust_traffic_infomation[0])
+                            save_information_in_the_table(page_number, used_traffic_new, traffic_unit)
 
                     print(lust_traffic_infomation)
-               #Если значение пустое сохраняем данные как первое значение
+                #Если значение пустое сохраняем данные как первое значение
                 except Exception as ex:
                     save_information_in_the_table(number_ch, 0, traffic_unit)
 
