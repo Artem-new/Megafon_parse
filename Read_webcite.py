@@ -7,7 +7,7 @@ from commands.send_info import send_message
 from information.chats import chat_id, chat_info
 from commands.parse_website import check_numbers, balance_list, balance_value, total_balance
 from commands.sqlite_command import creata_table
-from commands.sqlite_command import traffic_infomation, information_about_limit_traffic
+from commands.sqlite_command import traffic_infomation
 from commands.save_information_in_json import save_to_json
 import os
 import random
