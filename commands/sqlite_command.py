@@ -4,8 +4,6 @@ from datetime import date
 
 traffic_infomation = []
 lust_traffic_infomation = []
-save_information_in_the_table_about_limit = []
-# information_about_limit_traffic = []
 time_date = date.today()
 
 
@@ -64,22 +62,6 @@ def take_last_information_about_traffik(numb):
 
     connection.commit()
 
-
-# def update_information_in_the_table(numb, traffic, format):
-#     try:
-#         take_last_information_about_traffik(numb)
-#         connection = sqlite3.connect('Megafon.db')
-#         coursor_connection = connection.cursor()
-#         coursor_connection.execute(f'DELETE FROM Traffic_information WHERE date=?', (time_date,))
-#         # coursor_connection.execute(f'DELETE FROM Traffic_limit WHERE number=?', (numb,))
-#         connection.commit()
-#         save_information_in_the_table(numb, traffic_infomation[0]+traffic, format)
-#         connection.commit()
-#     except Exception as ex:
-#         print(ex)
-#         save_information_in_the_table(numb, traffic, format)
-
-
 def save_information_in_the_table_about_limit(numb, limit, format):
     '''Вставить инофрмацию олимите трафика'''
     connection = sqlite3.connect('Megafon.db')
@@ -132,19 +114,3 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic, format):
         # save_information_about_last_info(numb, lust_traffic, format)
         return ex
 
-
-# def load_and_save_information_about_traffic_limit(numb, limit_traffic, format):
-#     '''Получить инофрмацию о лимите траффика'''
-#     connection = sqlite3.connect('Megafon.db')
-#     coursor_connection = connection.cursor()
-#     coursor_connection.execute(f"SELECT limits FROM Traffic_limit WHERE number=?", (numb,))
-#     '''Получение'''
-#     last_information_traffic = coursor_connection.fetchone()
-#     for last_trafic_info in last_information_traffic:
-#         information_about_limit_traffic.append(last_trafic_info)
-#     # if last_trafic_info != limit_traffic:
-#     #     update_informattion_in_the_table_about_limit(numb, limit_traffic, format)
-#     #     information_about_limit_traffic.clear()
-#     #     information_about_limit_traffic.append(limit_traffic)
-#     # else:
-#     connection.commit()
