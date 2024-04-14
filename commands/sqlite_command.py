@@ -58,7 +58,6 @@ def take_last_information_about_traffik(numb):
     last_information_traffic = coursor_connection.fetchone()
     for trafic_info in last_information_traffic:
         traffic_infomation.append(trafic_info)
-        print(traffic_infomation[0])
 
     connection.commit()
 
@@ -76,9 +75,6 @@ def update_informattion_in_the_table_about_limit(numb, limit, format):
         coursor_connection = connection.cursor()
         coursor_connection.execute(f'DELETE FROM Traffic_limit WHERE number=?', (numb,))
         connection.commit()
-        # coursor_connection.execute(f"UPDATE Traffic_limit SET WHERE number=?",
-        #                            (numb, limit, format))
-        # connection.commit()
         save_information_in_the_table_about_limit(numb, limit, format)
     except Exception:
         save_information_in_the_table_about_limit(numb, limit, format)
@@ -97,7 +93,6 @@ def take_information_abut_lust_info(numb):
     last_information_traffic = coursor_connection.fetchone()
     for last_trafic_info in last_information_traffic:
         lust_traffic_infomation.append(last_trafic_info)
-        print(lust_traffic_infomation)
 
 
 def update_informatin_in_the_table_Lust_info(numb, lust_traffic, format):
@@ -106,11 +101,8 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic, format):
         coursor_connection = connection.cursor()
         coursor_connection.execute(f'DELETE FROM Last_info WHERE number=?', (numb,))
         connection.commit()
-        # coursor_connection.execute(f"INSERT Last_info SET WHERE number=?",
-        #                       (numb, lust_traffic, format))
-        # connection.commit()
+
         save_information_about_last_info(numb, lust_traffic, format)
     except Exception as ex:
-        # save_information_about_last_info(numb, lust_traffic, format)
         return ex
 
