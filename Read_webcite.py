@@ -24,10 +24,10 @@ def check():
         '''Настрока вебдрайвера, скрывать окно браузера, убрать загрузку картинок,
         '''
         options = webdriver.ChromeOptions()
-        # options.add_argument("--headless")
-        #prefs = {"profile.managed_default_content_settings.images": 2}
-        #options.add_experimental_option("prefs", prefs)
-        #options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless")
+        prefs = {"profile.managed_default_content_settings.images": 2}
+        options.add_experimental_option("prefs", prefs)
+        options.add_argument("--disable-dev-shm-usage")
         options.add_argument(
             f"user-agent={random.choice(user_agent_list)}")
         driver = webdriver.Chrome(
@@ -39,8 +39,6 @@ def check():
         cheking = dict(zip(pages, numbers))
         '''Parse sites'''
         [check_numbers(item[0], item[1], driver, chat_info, chat_id)for item in cheking.items()]
-        print(balance_value)
-
         send_message(chat_id,  '.'.join(balance_list))
         driver.quit()
 
