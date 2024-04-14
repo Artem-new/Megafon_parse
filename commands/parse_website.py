@@ -1,6 +1,6 @@
 from commands.chek_traffik import mb,gb
 from commands.send_info import send_message
-from commands.sqlite_command import save_information_in_the_table_about_limit, update_informatin_in_the_table_Lust_info
+from commands.sqlite_command import save_information_in_the_table_about_limit, update_informatin_in_the_table_Lust_info, update_informattion_in_the_table_about_limit
 from commands.sqlite_command import take_last_information_about_traffik, traffic_infomation, save_information_in_the_table
 from commands.sqlite_command import lust_traffic_infomation, take_information_abut_lust_info, save_information_about_last_info
 import time
@@ -60,24 +60,28 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                 try:
                     """Проверим лимит трафика"""
                     take_last_information_about_traffik(number_ch)
-                    print(f"test - {traffic_infomation[0]} + {float(total_traffic_value)}")
                     if float(traffic_infomation[0]) != float(total_traffic_value):
+                        update_informattion_in_the_table_about_limit(number_ch, total_traffic_value, traffic_unit)
                         take_information_abut_lust_info(number_ch)
-                        update_informatin_in_the_table_Lust_info(number_ch, total_traffic_value, traffic_unit)
+                        update_informatin_in_the_table_Lust_info(number_ch, traffic_value, traffic_unit)
                         take_information_abut_lust_info(number_ch)
                         used_traffic_new = float(total_traffic_value) - float(lust_traffic_infomation[0])
                         save_information_in_the_table(number_ch, used_traffic_new, traffic_unit)
                     else:
                         take_information_abut_lust_info(number_ch)
-                        """Записываем условие сохранения испоьльзованного траффика"""
+                        """
+                        Записываем условие сохранения испоьльзованного траффика если предудущее значение меньше текщего, то
+                        вычитаем лимит из текущего значения трафика 
+                        """
                         if float(lust_traffic_infomation[0]) < float(traffic_value):
                             used_traffic_last = float(traffic_value)-float(lust_traffic_infomation[0])
-                            save_information_in_the_table(page_number, used_traffic_last, traffic_unit)
+                            save_information_in_the_table(number_ch, used_traffic_last, traffic_unit)
+                            update_informatin_in_the_table_Lust_info(number_ch, traffic_value, traffic_unit)
                         else:
                             used_traffic_new = float(total_traffic_value) - float(lust_traffic_infomation[0])
-                            save_information_in_the_table(page_number, used_traffic_new, traffic_unit)
+                            save_information_in_the_table(number_ch, used_traffic_new, traffic_unit)
+                            update_informatin_in_the_table_Lust_info(number_ch, traffic_value, traffic_unit)
 
-                    print(lust_traffic_infomation)
                 #Если значение пустое сохраняем данные как первое значение
                 except Exception as ex:
                     save_information_in_the_table(number_ch, float(0), traffic_unit)

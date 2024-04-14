@@ -56,7 +56,7 @@ def take_last_information_about_traffik(numb):
     '''Получить информацию о последнем трафике'''
     connection = sqlite3.connect('Megafon.db')
     coursor_connection = connection.cursor()
-    coursor_connection.execute(f"SELECT last_traffic FROM Last_info WHERE number=?", (numb,))
+    coursor_connection.execute(f"SELECT limits FROM Traffic_limit WHERE number=?", (numb,))
     last_information_traffic = coursor_connection.fetchone()
     for trafic_info in last_information_traffic:
         traffic_infomation.append(trafic_info)
@@ -94,9 +94,10 @@ def update_informattion_in_the_table_about_limit(numb, limit, format):
         coursor_connection = connection.cursor()
         coursor_connection.execute(f'DELETE FROM Traffic_limit WHERE number=?', (numb,))
         connection.commit()
-        coursor_connection.execute(f"UPDATE Traffic_limit SET WHERE number=?",
-                                   (numb, limit, format))
-        connection.commit()
+        # coursor_connection.execute(f"UPDATE Traffic_limit SET WHERE number=?",
+        #                            (numb, limit, format))
+        # connection.commit()
+        save_information_in_the_table_about_limit(numb, limit, format)
     except Exception:
         save_information_in_the_table_about_limit(numb, limit, format)
 
