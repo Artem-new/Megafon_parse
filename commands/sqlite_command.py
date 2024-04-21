@@ -5,6 +5,7 @@ from datetime import date
 traffic_infomation = []
 lust_traffic_infomation = []
 time_date = date.today()
+table_infomation = []
 
 
 def connection_base(command):
@@ -106,3 +107,13 @@ def update_informatin_in_the_table_Lust_info(numb, lust_traffic, format):
     except Exception as ex:
         return ex
 
+def take_table_information():
+    try:
+        connection = sqlite3.connect('Megafon.db')
+        coursor_connection = connection.cursor()
+        coursor_connection.execute(f"SELECT * FROM Traffic_information")
+        last_information_traffic = coursor_connection.fetchall()
+        for inform in last_information_traffic:
+            table_infomation.append(list(inform))
+    except Exception as ex:
+        return ex

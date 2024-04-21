@@ -38,6 +38,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 .idea/local
+seervice_account.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

@@ -7,17 +7,16 @@ from commands.send_info import send_message
 from information.chats import chat_id, chat_info
 from commands.parse_website import check_numbers, balance_list, balance_value, total_balance
 from commands.sqlite_command import creata_table
-from commands.sqlite_command import traffic_infomation
-from commands.save_information_in_json import save_to_json
+from commands.sqlite_command import take_table_information, table_infomation
+from information.pagelist import SPREAD_SHEET_URL
 import os
 import random
 import requests
-from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
-
+import gspread
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 def check():
     try:
@@ -47,6 +46,15 @@ def check():
         print(ex)
         send_message(chat_id, "Бот неисправен")
 
+def insert_into_google_sheet_information():
+    take_table_information()
+    gc = gspread.service_account("./seervice_account.json")
+    sps = gc.open_by_url(SPREAD_SHEET_URL)
+    sps.values_clear("A:E")
+    ws = sps.sheet1
+    ws.insert_rows(table_infomation)
+    ws.insert_row(["Дата", "Номер", "Траффик", "Тип"])
+    table_infomation.clear()
 
 def check_url():
     test = requests.get(url)
@@ -54,6 +62,7 @@ def check_url():
     if test:
         print('Сайт доступен')
         check()
+        insert_into_google_sheet_information()
     else:
         send_message(chat_id, "Сайт не доступен")
         print('Сайт не доступен')

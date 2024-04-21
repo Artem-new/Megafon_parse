@@ -95,3 +95,4 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
         traffic_infomation.clear()
         lust_traffic_infomation.clear()
         send_message(chat_id, "Структура не доступна или поменялась")
+
