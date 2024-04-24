@@ -54,7 +54,7 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                         take_information_abut_lust_info(number_ch)
                         update_informatin_in_the_table_Lust_info(number_ch, traffic_value, traffic_unit)
                         take_information_abut_lust_info(number_ch)
-                        used_traffic_new = float(total_traffic_value) - float(lust_traffic_infomation[0])
+                        used_traffic_new = float(lust_traffic_infomation[0]) - float(total_traffic_value)
                         save_information_in_the_table(number_ch, used_traffic_new, traffic_unit)
                     else:
                         take_information_abut_lust_info(number_ch)
@@ -63,7 +63,7 @@ def check_numbers(page_number, number_ch, driver, chat_info, chat_id):
                         вычитаем лимит из текущего значения трафика 
                         """
                         if float(lust_traffic_infomation[0]) >= float(traffic_value):
-                            used_traffic_last = float(traffic_value)-float(lust_traffic_infomation[0])
+                            used_traffic_last = float(lust_traffic_infomation[0]) - float(traffic_value)
                             save_information_in_the_table(number_ch, used_traffic_last, traffic_unit)
                             update_informatin_in_the_table_Lust_info(number_ch, traffic_value, traffic_unit)
                         else:
